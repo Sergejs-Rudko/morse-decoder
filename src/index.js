@@ -38,7 +38,45 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    let myArray = [];
+    let substring = '';
+    console.log(expr.length)
+
+    let counter = 0;
+    for(let i = 0; i < expr.length; i++){
+        substring += expr[i];
+        counter++;
+        if(counter === 10){
+            myArray.push(substring);
+            substring = '';
+            counter = 0;
+        }
+
+    }
+
+    console.log(myArray);
+    let dashDotted = myArray.map((el) => {
+        let elArr = el.split('');
+        let newElem = '';
+        for(let i = 0; i < 5; i++){
+            let first = elArr.shift();
+            let second = elArr.shift();
+            if(`${first}${second}` === '10'){
+                newElem += '.'
+            }else if(`${first}${second}` === '11'){
+                newElem += '-'
+            }else if(`${first}${second}` === '**'){
+                newElem += ' ';
+                break;
+            }
+        }
+        return newElem;
+    })
+
+
+    let result =  dashDotted.map((el) => el === ' ' ? el : MORSE_TABLE[`${el}`]);
+    return result.join('')
+
 }
 
 module.exports = {
